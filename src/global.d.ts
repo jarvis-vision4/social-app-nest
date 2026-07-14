@@ -1,0 +1,1 @@
+type IPrivacy = 'public' | 'private' | 'friends'
