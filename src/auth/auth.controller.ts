@@ -3,6 +3,7 @@ import { AuthService } from './auth.service';
 import { SignUpDto } from './dto/sign-up.dto';
 import { TransformDTO } from 'src/_cores/interceptors/transform-dto.interceptor';
 import { ResponseAuthDto } from './dto/response-auth.dto';
+import { SignInDto } from './dto/sign-in.dto';
 
 
 @Controller('auth')
@@ -10,9 +11,13 @@ import { ResponseAuthDto } from './dto/response-auth.dto';
 export class AuthController {
   constructor(private readonly authService: AuthService) { }
 
-  @Post('/sign-up')
+  @Post('sign-up')
   create(@Body() signupDto: SignUpDto) {
     return this.authService.create(signupDto);
+  }
+  @Post('sign-in')
+  signIn(@Body() signinDto: SignInDto) {
+    return this.authService.signIn(signinDto);
   }
 
   @Get()

@@ -19,7 +19,7 @@ export class TransformDTOInterceptor<T> implements NestInterceptor {
 
     intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
         const request = context.switchToHttp().getRequest<Request>();
-
+        const isAuthenticationUrl = request.path.includes('auth');
         return next.handle().pipe(
             map((data) => {
                 console.log(data);
@@ -32,6 +32,16 @@ export class TransformDTOInterceptor<T> implements NestInterceptor {
                         }),
                         hasNextPage,
                         cursor,
+                    };
+                }
+                if (isAuthenticationUrl) {
+                    const { user, accessToken } = data;
+                    return {
+                        message: 'success',
+                        data: classTransformer.plainToInstance(this.dtoClass, user, {
+                            excludeExtraneousValues: true,
+                        }),
+                        accessToken: accessToken,
                     };
                 }
 

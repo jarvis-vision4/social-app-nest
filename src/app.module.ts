@@ -18,7 +18,7 @@ import { PostModule } from './post/post.module';
     }),
     UserModule,
     AuthModule,
-    PostModule
+    PostModule,
   ],
   controllers: [AppController],
   providers: [AppService],
